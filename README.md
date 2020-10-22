@@ -1,4 +1,4 @@
-# new-project
+# vue-template-courses
 
 ## Project setup
 ```
