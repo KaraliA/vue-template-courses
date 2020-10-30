@@ -7,8 +7,10 @@ type Course = {
   level: string;
   author: string;
   hours: number;
+  timesViewed: number;
   description: string;
 }
+export type { Course };
 
 Vue.use(Vuex)
 export default new Vuex.Store({
@@ -25,6 +27,9 @@ export default new Vuex.Store({
     },
     getCoursesByLevel: (state) => (level: string) => {
       return state.courses.filter(course => course.level === level);
+    },
+    getTimesViewedOfCoursesByLevel: (state, getters) => (level: string) => {
+      return getters.getCoursesByLevel(level).reduce((total: number, course: Course) => total + course.timesViewed, 0);
     }
   },
   mutations: {
@@ -34,8 +39,8 @@ export default new Vuex.Store({
     setCourses: (state, courses) => {
       state.courses = courses;
     },
-    addCourse: (state, course) => {
-      state.courses.push(course);
+    increaseTimesViewed: (state, course: Course) => {
+      course.timesViewed++;
     }
   },
   actions: {

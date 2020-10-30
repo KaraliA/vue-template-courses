@@ -5,6 +5,7 @@
     <ul>
       <li v-for="level in levels" :key="level">
         <router-link :to="{name: 'Courses', params: {level: level}}">{{ level }}</router-link>
+        <p>times viewed: {{ timesViewedByLevel(level) }}</p>
       </li>
     </ul>
     <h3>Want to acquaint with Vue.js documentation yourself?</h3>
@@ -30,8 +31,14 @@ export default Vue.extend({
       return this.$store.getters.levels;
     }
   },
+  methods: {
+    timesViewedByLevel(level)  {
+      return this.$store.getters.getTimesViewedOfCoursesByLevel(level);
+    }
+  },
   created() {
     this.$store.dispatch('getAllLevels');
+    this.$store.dispatch('getAllCourses');
   }
 })
 </script>

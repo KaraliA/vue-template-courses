@@ -8,17 +8,17 @@
         <li>Author: {{ item.author }}</li>
         <li>Level: {{ item.level }}</li>
         <li>Duration: {{ item.hours }} hours</li>
-        <li>Viewed: 5 times</li>
+        <li>Viewed: {{ item.timesViewed }} times</li>
       </ul>
       <p class="description">{{ item.description }}</p>
-      <button @click="addCourse(item)">Start</button>
+      <button @click="increaseTimesViewed(item)">Start</button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-
+import type { Course } from '../store';
 export default Vue.extend({
     name: 'Courses',
     computed: {
@@ -30,14 +30,8 @@ export default Vue.extend({
       }
     },
     methods: {
-      addCourse(item) {
-        this.$store.commit('addCourse', {
-          title: item.title,
-          level: item.level,
-          author: item.author,
-          hours: item.hours,
-          description: item.description
-        });
+      increaseTimesViewed(item: Course) {
+        this.$store.commit('increaseTimesViewed', item);
       }
     },
     created () {
